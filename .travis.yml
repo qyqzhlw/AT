@@ -1,0 +1,21 @@
+sudo: flase
+language: python
+python:
+  - 3.5
+  - 3.6
+
+matrix:
+  include:
+    - python: 3.7
+      dist: xenial
+      sudo: true
+
+install:
+  - pip install poetry
+  - poetry install -vvv
+
+script:
+  - poetry run coverage run --source=at -m pytest -v
+  - poetry run coverage report -m
+after_success:
+  - poetry run coveralls
